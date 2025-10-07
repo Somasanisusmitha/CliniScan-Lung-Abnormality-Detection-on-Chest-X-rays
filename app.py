@@ -18,6 +18,7 @@ st.write(f"Using device: {device}")
 # ---------------------------
 # Load Model
 # ---------------------------
+MODEL_URL = https://github.com/Somasanisusmitha/CliniScan-Lung-Abnormality-Detection-on-Chest-X-rays/releases/download/v1.0/model.pth
 MODEL_PATH = "model.pth"  # Make sure your model file is here
 
 @st.cache_resource
@@ -92,3 +93,4 @@ if uploaded_file:
     ax[1].axis("off")
 
     st.pyplot(fig)
+
