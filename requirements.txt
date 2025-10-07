@@ -1,13 +1,11 @@
-streamlit==1.50.0
-torch==2.8.0
-torchvision==0.23.0
-matplotlib==3.9.2
-numpy==2.3.3
-pandas==2.3.3
-pillow==11.3.0
-gdown==5.2.0
-pytorch-grad-cam==1.4.5
-tqdm==4.67.1
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.2.0+cpu
+torchvision==0.17.1+cpu
+streamlit
+pytorch-grad-cam
+matplotlib
+numpy
+Pillow
 
 
 
