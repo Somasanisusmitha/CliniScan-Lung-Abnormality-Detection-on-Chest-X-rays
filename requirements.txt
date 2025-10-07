@@ -1,4 +1,10 @@
 streamlit
 torch
 torchvision
+pytorch-grad-cam
+matplotlib
+pillow
+numpy
 gdown
+
+
