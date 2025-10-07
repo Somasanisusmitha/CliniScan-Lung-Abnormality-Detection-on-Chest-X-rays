@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pytorch_grad_cam import GradCAM
 from pytorch_grad_cam.utils.image import show_cam_on_image
+import gdown  # <-- added for model download
 
 # ---------------------------
 # Device (CPU/GPU)
@@ -16,18 +17,28 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 st.write(f"Using device: {device}")
 
 # ---------------------------
+# Model Path and Download
+# ---------------------------
+MODEL_URL = "https://github.com/Somasanisusmitha/CliniScan-Lung-Abnormality-Detection-on-Chest-X-rays/releases/download/v1.0/model.pth"
+MODEL_PATH = "model.pth"
+
+# Download model if not present
+if not os.path.exists(MODEL_PATH):
+    with st.spinner("Downloading model... Please wait ⏳"):
+        gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+
+# ---------------------------
 # Load Model
 # ---------------------------
-MODEL_URL = https://github.com/Somasanisusmitha/CliniScan-Lung-Abnormality-Detection-on-Chest-X-rays/releases/download/v1.0/model.pth
-MODEL_PATH = "model.pth"  # Make sure your model file is here
-
 @st.cache_resource
 def load_model(path):
     if not os.path.exists(path):
         st.error(f"❌ Model file not found at {path}")
         st.stop()
+
     model = models.resnet18(weights=None)
     model.fc = nn.Linear(model.fc.in_features, 2)  # 2 classes
+
     ckpt = torch.load(path, map_location=device)
     model.load_state_dict(ckpt["model_state"])
     model.to(device)
@@ -69,7 +80,7 @@ if uploaded_file:
         pred_class = torch.argmax(probs).item()
 
     st.write(f"### Prediction: **{classes[pred_class]}**")
-    st.write(f"Confidence: {probs[pred_class].item()*100:.2f}%")
+    st.write(f"Confidence: {probs[pred_class].item() * 100:.2f}%")
     st.bar_chart({classes[i]: probs[i].item() for i in range(len(classes))})
 
     # ---------------------------
@@ -93,4 +104,3 @@ if uploaded_file:
     ax[1].axis("off")
 
     st.pyplot(fig)
-
