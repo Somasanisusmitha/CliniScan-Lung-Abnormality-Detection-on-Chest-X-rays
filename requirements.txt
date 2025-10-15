@@ -5,3 +5,4 @@ torchaudio==2.2.0+cpu
 pytorch-gradcam==1.4.8
 pillow==10.3.0
 rich>=10.14.0
+
