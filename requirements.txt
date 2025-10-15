@@ -1,15 +1,12 @@
-# core
+# Core
 streamlit==1.50.0
 
-# PyTorch: choose a version that supports Python 3.13 on Streamlit Cloud
-torch>=2.5.0,<2.9.0
-torchvision>=0.14.0,<0.16.0
+# PyTorch: versions that support Python 3.13
+torch==2.8.0
+torchvision==0.23.0
 
-# other libs your app uses
+# Other libraries
 pillow==10.0.0
 pandas==2.1.0
 pytorch-grad-cam==1.4.8
-
-# any other packages you need
 requests==2.31.0
-
