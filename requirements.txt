@@ -1,12 +1,10 @@
-# core
-streamlit==1.33.0
-
-# compatible with Python 3.11 (force Streamlit Cloud to use it)
-torch==2.2.2
-torchvision==0.17.2
-
-# other dependencies
-pillow==10.2.0
-pandas==2.2.1
+streamlit==1.32.0
+torch==2.2.0
+torchvision==0.17.0
+pillow==9.5.0
+numpy==1.26.4
+pandas==2.2.2
 pytorch-grad-cam==1.4.8
-requests==2.31.0
+opencv-python-headless==4.9.0.80
+matplotlib==3.8.4
+scikit-learn==1.4.2
