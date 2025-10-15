@@ -6,4 +6,4 @@ pillow==10.3.0
 numpy
 pandas
 opencv-python-headless
-pytorch-grad-cam==1.3.9
+pytorch-gradcam==1.4.8
