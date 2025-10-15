@@ -1,8 +1,9 @@
 streamlit==1.29.0
-torch==2.2.0
+torch==2.8.0
 torchvision==0.17.0
 pillow==9.5.0
 numpy
 pandas
 opencv-python-headless
 pytorch-grad-cam==1.4.8
+
