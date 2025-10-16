@@ -7,5 +7,3 @@ matplotlib
 numpy
 Pillow
 gdown
-
-
