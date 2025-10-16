@@ -1,8 +1,8 @@
 streamlit==1.29.0
-torch==2.2.0+cpu
-torchvision==0.15.1+cpu
-torchaudio==2.2.0+cpu
+torch==2.5.1
+torchvision==0.20.1
+torchaudio==2.5.1
 pytorch-gradcam==1.4.8
 pillow==10.3.0
 rich>=10.14.0
-
+gdown==5.2.0
