@@ -1,7 +1,10 @@
 streamlit==1.29.0
-torch==2.7.0
-torchvision==0.22.0
-torchaudio==2.7.0
+torch==2.4.1
+torchvision==0.19.1
+torchaudio==2.4.1
 pytorch-gradcam==0.2.1
-pillow==10.3.0
-rich>=10.14.0
+numpy
+pillow
+opencv-python-headless
+matplotlib
+scikit-learn
