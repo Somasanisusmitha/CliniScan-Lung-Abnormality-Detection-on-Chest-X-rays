@@ -7,18 +7,8 @@ from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
 
-# -------------------------------------------------------------------
-# Safe import for pytorch_grad_cam (auto-installs if missing)
-# -------------------------------------------------------------------
-try:
-    from pytorch_grad_cam import GradCAM
-    from pytorch_grad_cam.utils.image import show_cam_on_image
-except ModuleNotFoundError:
-    import os
-    os.system("pip install pytorch-gradcam==0.2.1")
-    from pytorch_grad_cam import GradCAM
-    from pytorch_grad_cam.utils.image import show_cam_on_image
-
+from pytorch_grad_cam import GradCAM
+from pytorch_grad_cam.utils.image import show_cam_on_image
 import gdown  # for model download
 
 # ---------------------------
@@ -99,7 +89,7 @@ if uploaded_file:
     # ---------------------------
     target_layers = [model.layer4[-1]]
     cam = GradCAM(model=model, target_layers=target_layers)
-    grayscale_cam = cam(input_tensor=input_tensor)[0]
+    grayscale_cam = cam(input_tensor=input_tensor, targets=None)[0]
 
     rgb_img = np.array(image.resize((224, 224))) / 255.0
     visualization = show_cam_on_image(rgb_img, grayscale_cam, use_rgb=True)
@@ -114,4 +104,5 @@ if uploaded_file:
     ax[1].set_title("Grad-CAM Visualization")
     ax[1].axis("off")
 
+    plt.tight_layout()
     st.pyplot(fig)
