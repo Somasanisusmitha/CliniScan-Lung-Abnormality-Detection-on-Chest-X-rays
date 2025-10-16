@@ -3,8 +3,9 @@ torch==2.4.1
 torchvision==0.19.1
 torchaudio==2.4.1
 pytorch-gradcam==0.2.1
-numpy
-pillow
 opencv-python-headless
 matplotlib
+numpy
+pillow
 scikit-learn
+gdown
