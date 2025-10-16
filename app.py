@@ -6,15 +6,26 @@ from torchvision import transforms, models
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
-from pytorch_grad_cam import GradCAM
-from pytorch_grad_cam.utils.image import show_cam_on_image
-import gdown  # <-- added for model download
+
+# -------------------------------------------------------------------
+# Safe import for pytorch_grad_cam (auto-installs if missing)
+# -------------------------------------------------------------------
+try:
+    from pytorch_grad_cam import GradCAM
+    from pytorch_grad_cam.utils.image import show_cam_on_image
+except ModuleNotFoundError:
+    import os
+    os.system("pip install pytorch-gradcam==0.2.1")
+    from pytorch_grad_cam import GradCAM
+    from pytorch_grad_cam.utils.image import show_cam_on_image
+
+import gdown  # for model download
 
 # ---------------------------
 # Device (CPU/GPU)
 # ---------------------------
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-st.write(f"Using device: {device}")
+st.write(f"✅ Using device: {device}")
 
 # ---------------------------
 # Model Path and Download
@@ -24,7 +35,7 @@ MODEL_PATH = "model.pth"
 
 # Download model if not present
 if not os.path.exists(MODEL_PATH):
-    with st.spinner("Downloading model... Please wait ⏳"):
+    with st.spinner("📦 Downloading model... Please wait ⏳"):
         gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
 
 # ---------------------------
@@ -37,7 +48,7 @@ def load_model(path):
         st.stop()
 
     model = models.resnet18(weights=None)
-    model.fc = nn.Linear(model.fc.in_features, 2)  # 2 classes
+    model.fc = nn.Linear(model.fc.in_features, 2)  # 2 output classes
 
     ckpt = torch.load(path, map_location=device)
     model.load_state_dict(ckpt["model_state"])
@@ -60,10 +71,10 @@ transform = transforms.Compose([
 # ---------------------------
 # Streamlit UI
 # ---------------------------
-st.title("🩺 Chest X-Ray Classification with Grad-CAM")
-st.write("Upload a Chest X-ray image to classify it and view Grad-CAM heatmap.")
+st.title("🩺 CliniScan: Chest X-Ray Abnormality Detection")
+st.write("Upload a Chest X-ray image to classify it and view the Grad-CAM heatmap.")
 
-uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("📤 Upload an image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")
@@ -79,7 +90,7 @@ if uploaded_file:
         probs = torch.softmax(outputs, dim=1)[0]
         pred_class = torch.argmax(probs).item()
 
-    st.write(f"### Prediction: **{classes[pred_class]}**")
+    st.write(f"### 🧠 Prediction: **{classes[pred_class]}**")
     st.write(f"Confidence: {probs[pred_class].item() * 100:.2f}%")
     st.bar_chart({classes[i]: probs[i].item() for i in range(len(classes))})
 
@@ -93,14 +104,14 @@ if uploaded_file:
     rgb_img = np.array(image.resize((224, 224))) / 255.0
     visualization = show_cam_on_image(rgb_img, grayscale_cam, use_rgb=True)
 
-    st.subheader("Grad-CAM Heatmap")
+    st.subheader("🔥 Grad-CAM Heatmap")
     fig, ax = plt.subplots(1, 2, figsize=(10, 5))
     ax[0].imshow(image)
-    ax[0].set_title("Original")
+    ax[0].set_title("Original Image")
     ax[0].axis("off")
 
     ax[1].imshow(visualization)
-    ax[1].set_title("Grad-CAM")
+    ax[1].set_title("Grad-CAM Visualization")
     ax[1].axis("off")
 
     st.pyplot(fig)
