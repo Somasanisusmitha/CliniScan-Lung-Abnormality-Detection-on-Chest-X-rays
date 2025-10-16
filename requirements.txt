@@ -1,8 +1,15 @@
+# Core
 streamlit==1.29.0
+
+# PyTorch (supported by Streamlit Cloud)
 torch==2.4.1
 torchvision==0.19.1
 torchaudio==2.4.1
-pytorch-gradcam==0.2.1
+
+# Grad-CAM (correct package name)
+pytorch-grad-cam==1.4.8
+
+# Visualization and data handling
 matplotlib
 numpy
 Pillow
